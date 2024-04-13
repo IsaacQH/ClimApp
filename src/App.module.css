@@ -1,0 +1,24 @@
+/* Estilo para el título */
+.title {
+    font-weight: 200; /* Peso de la fuente: 200 (ligero) */
+    text-align: center; /* Texto centrado */
+    margin-top: 3rem; /* Margen superior de 3 rem */
+}
+
+/* Estilo para el contenedor */
+.container {
+    width: 95%; /* Ancho del 95% del contenedor padre */
+    max-width: 100rem; /* Ancho máximo de 100 rem */
+    margin: 0 auto; /* Centra horizontalmente */
+}
+
+/* Estilos para tamaños de pantalla más grandes (más de 768px) */
+@media (min-width: 768px) {
+    .container {
+        display: grid; /* Utiliza la disposición de cuadrícula */
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual ancho */
+        align-items: center; /* Alinea los elementos verticalmente en el centro */
+        gap: 4rem; /* Espacio entre columnas */
+        margin-top: 5rem; /* Margen superior de 5 rem */
+    }
+}
