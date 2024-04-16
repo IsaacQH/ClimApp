@@ -1,0 +1,48 @@
+
+.form{
+    background-color: rgba(0, 0, 0, 0.164); /* Gris con una opacidad del 50% */
+    padding: 3rem; /* Añade un relleno para separar el contenido del borde */
+    border-radius: 20px;
+}
+.form,
+.field{
+    display: flex;
+    flex-direction: column;
+    gap:2rem;
+}
+
+.form input[type="text"],
+.form select{
+    padding: 1rem;
+    background-color: transparent;
+    border: .2rem solid rgba(7, 4, 4, 0.20);
+    border-radius: 1rem;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 100;
+}
+
+.field ::placeholder{
+    color:var(--white);
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: none; /* Quita el contorno al hacer hover o focus */
+    background-color:rgba(7, 4, 4, 0.37) ;
+}
+
+.submit{
+    background-color:rgba(7, 4, 4, 0.20);
+    border: transparent;
+    border-radius: 1rem;
+    margin-top: 1.5rem;
+    color:var(--white);
+    font-weight: 500;
+    font-size: 1.4rem;
+    padding: 10px;
+}
+.submit:hover{
+    background-color:rgba(7, 4, 4, 0.486);
+    cursor: pointer;
+}
