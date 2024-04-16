@@ -1,6 +1,6 @@
 
 import styles from "./App.module.css"
-import Form from "./components/Form"
+import Form from "./components/Form/Form"
 
 function App() {
   return (
