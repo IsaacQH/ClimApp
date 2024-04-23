@@ -4,7 +4,11 @@ import styles from "./Form.module.css"
 import { SearchType } from "../../types"
 import Alert from "../Alert/Alert"
 
-const Form = () => {
+type FormProps = {
+    fetchWeather: (search: SearchType) => Promise<void>
+}
+
+const Form = ({fetchWeather}:FormProps) => {
 
     const [search, setSearch] = useState<SearchType>({  //iniciamos el state del search en vaacios
         city: "",
@@ -28,7 +32,11 @@ const Form = () => {
             setAlert("All fields required")  //Setea el texto de alerta
             return  //Detiene la función
         }
-        setAlert("")
+        setAlert("")  //Quita la alerta
+
+        fetchWeather(search)  //Llama a la función fetch del hook useWeather y le pasa los datos de search
+
+
     }
         
     return (
