@@ -32,10 +32,12 @@ export default function useWeather (){
         }
     })
 
+    const [loading, setLoading] = useState(false)  //State que mostará si esta cargandose
+
     const fetchWeather = async (search:SearchType) => {   //Funcion que consulta a la API los datos por medio de función asinc, correra mientras se jecutan otras cosas
-
+        
         const appId = import.meta.env.VITE_API_KEY  //Id que creamos en openWeather como variable de entorno
-
+        setLoading(true)  //Una vez iniciada la funcion async estamos cargando
         try {   //Intenta esto
 
             const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${search.city},${search.country}&appid=${appId}`
@@ -62,6 +64,8 @@ export default function useWeather (){
         } catch (error) {  //Si es error, manda el error
             console.log(error)
 
+        } finally{   //Una vez que termine el async,  hace ...
+            setLoading(false)  //Una vez terminada la busqueda, se quita el loading 
         }
     }
 

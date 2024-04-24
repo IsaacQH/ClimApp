@@ -1,0 +1,32 @@
+.container{
+
+    padding: 3rem; /* Añade un relleno para separar el contenido del borde */
+    border-radius: 20px;
+
+    text-align: center;
+    font-weight: 100;
+}
+
+.container h2{
+    font-weight: 300;
+}
+
+.current{
+    font-size:6rem;
+    font-weight: 900;
+    margin:0;
+}
+
+.temperatures{
+    display:flex;
+    justify-content: center;
+    gap:5rem;
+}
+
+.temperatures p{
+    font-weight: 500;
+}
+
+.temperatures span{
+    font-weight: 300;
+}
