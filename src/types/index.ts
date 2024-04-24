@@ -11,11 +11,12 @@ export type CountriesType = {  //Datos para contries
     name: string
 }
 
-export type Weather = {
+
+/*export type Weather = {    // SE SUTILUTLLO POR ZOD
     name: string,
     main: {
         temp: number,
         temp_max: number,
         temp_min: number
     }
-}
+} */

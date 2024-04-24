@@ -5,6 +5,7 @@
 import axios from 'axios'
 import {z} from 'zod'
 import { SearchType } from '../types'
+import { useMemo, useState } from 'react'
 
 
 //Zod : esto sutituye el definir el type
@@ -12,14 +13,24 @@ const Weather = z.object({  //Definimos el skema de  Weather
     name: z.string(),
     main: z.object({
         temp: z.number(),
-        temp_min: z.string(),
-        temp_max: z.string()
+        temp_min: z.number(),
+        temp_max: z.number()
     })
 })
 
-type Weather = z.infer<typeof Weather> //
+export type Weather = z.infer<typeof Weather> //
 
 export default function useWeather (){
+
+
+    const [weather, setWeather] = useState<Weather>({  //Le defimos que es tipo clima
+        name: '',
+        main: {
+            temp: 0,
+            temp_min: 0,
+            temp_max: 0 
+        }
+    })
 
     const fetchWeather = async (search:SearchType) => {   //Funcion que consulta a la API los datos por medio de función asinc, correra mientras se jecutan otras cosas
 
@@ -39,9 +50,10 @@ export default function useWeather (){
 
             const {data:weatherResult} = await axios(weatherUrl)  //Get default -  renombramos data para evitar error
 
-            const result = Weather.safeParse(weatherResult)
-            if(result){
-                //Action1
+            const result = Weather.safeParse(weatherResult)  //Result crea un objeto nuevo con un success booleano y lo demás de data
+
+            if(result.success){  //Si existe el valor o es true
+                setWeather(result.data)  //Seteamos el weather al valor obenido
             }else {
                 //Action2
             }
@@ -51,11 +63,13 @@ export default function useWeather (){
             console.log(error)
 
         }
-
     }
 
+    const hasWeatherData = useMemo(() => weather.name, [weather]) //Revisa que exista el name cada que se modifica
 
     return {     //Regresa lo lo que queremos usar en el hook
-        fetchWeather
+        weather,
+        fetchWeather,
+        hasWeatherData
     }
 }
