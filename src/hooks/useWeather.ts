@@ -73,6 +73,7 @@ export default function useWeather (){
 
     return {     //Regresa lo lo que queremos usar en el hook
         weather,
+        loading,
         fetchWeather,
         hasWeatherData
     }
