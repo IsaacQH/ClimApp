@@ -3,7 +3,21 @@
 
 
 import axios from 'axios'
+import {z} from 'zod'
 import { SearchType } from '../types'
+
+
+//Zod : esto sutituye el definir el type
+const Weather = z.object({  //Definimos el skema de  Weather
+    name: z.string(),
+    main: z.object({
+        temp: z.number(),
+        temp_min: z.string(),
+        temp_max: z.string()
+    })
+})
+
+type Weather = z.infer<typeof Weather> //
 
 export default function useWeather (){
 
@@ -24,6 +38,13 @@ export default function useWeather (){
             const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appId}`
 
             const {data:weatherResult} = await axios(weatherUrl)  //Get default -  renombramos data para evitar error
+
+            const result = Weather.safeParse(weatherResult)
+            if(result){
+                //Action1
+            }else {
+                //Action2
+            }
             
 
         } catch (error) {  //Si es error, manda el error
