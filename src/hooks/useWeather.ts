@@ -18,32 +18,40 @@ const Weather = z.object({  //Definimos el skema de  Weather
     })
 })
 
+const initialWeather = {  //Le defimos estado inicial de weather
+    name: '',
+    main: {
+        temp: 0,
+        temp_min: 0,
+        temp_max: 0 
+    }
+}
+
 export type Weather = z.infer<typeof Weather> //
 
 export default function useWeather (){
 
 
-    const [weather, setWeather] = useState<Weather>({  //Le defimos que es tipo clima
-        name: '',
-        main: {
-            temp: 0,
-            temp_min: 0,
-            temp_max: 0 
-        }
-    })
-
+    const [weather, setWeather] = useState<Weather>(initialWeather)
     const [loading, setLoading] = useState(false)  //State que mostará si esta cargandose
+    const [notFound, setNotFound] = useState(false) //Revisa si existe
 
     const fetchWeather = async (search:SearchType) => {   //Funcion que consulta a la API los datos por medio de función asinc, correra mientras se jecutan otras cosas
         
         const appId = import.meta.env.VITE_API_KEY  //Id que creamos en openWeather como variable de entorno
         setLoading(true)  //Una vez iniciada la funcion async estamos cargando
+        setWeather(initialWeather)  //Colocamos en el estado inicial el state
+        setNotFound(false)
         try {   //Intenta esto
 
             const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${search.city},${search.country}&appid=${appId}`
 
             const {data} = await axios(geoUrl,{method:'get'}) //Desstructuramos solo data de la respuesta axios
             
+            if(!data[0]){ //Si data no existe o es undefined
+                setNotFound(true)
+                return
+            }
             
             const lat = data[0].lat  //Latitud 
             const lon = data[0].lon  //Longitud
@@ -65,7 +73,10 @@ export default function useWeather (){
             console.log(error)
 
         } finally{   //Una vez que termine el async,  hace ...
-            setLoading(false)  //Una vez terminada la busqueda, se quita el loading 
+            setTimeout(()=> {
+                setLoading(false)
+            }, 1000)
+             //Una vez terminada la busqueda, se quita el loading 
         }
     }
 
@@ -74,6 +85,7 @@ export default function useWeather (){
     return {     //Regresa lo lo que queremos usar en el hook
         weather,
         loading,
+        notFound,
         fetchWeather,
         hasWeatherData
     }
